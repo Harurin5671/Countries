@@ -77,7 +77,13 @@ export default function rootReducer(state = initialState, action) {
       }
       case FILTER_BY_SEASON_ACTIVITY:
         let filter = state.allcountries;
-        console.log("🚀 ~ file: index.js:80 ~ rootReducer ~ filter ", filter )
+        console.log("🚀 ~ file: index.js:80 ~ rootReducer ~ filter", filter.map(c => c.activities))
+        const activityFilter = action.payload === "" ? allcountries : allcountries.filter(e => e.continents === action.payload);
+      return{
+        ...state,
+        countries: continentFiltered
+      }
+        // let activityFilter = filter.filter()
     default:
       return { ...state };
   }

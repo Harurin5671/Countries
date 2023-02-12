@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FilterByContinent, getCountries, orderByName, orderByPop } from "../../redux/actions";
+import { FilterByContinent, getCountries, orderByName, orderByPop, orderByActivity } from "../../redux/actions";
 // import {
 //   filterCreated,
 //   orderByName,
@@ -57,6 +57,13 @@ export default function Filter({ setCurrentPage, setOrder }) {
   function handleSortPop(e){
     e.preventDefault();
     dispatch(orderByPop(e.target.value));
+    setCurrentPage(1);
+    setOrder(e.target.value);
+  }
+
+  function handleSelectActivity(e){
+    e.preventDefault();
+    dispatch(orderByActivity(e.target.value));
     setCurrentPage(1);
     setOrder(e.target.value);
   }
@@ -130,6 +137,15 @@ export default function Filter({ setCurrentPage, setOrder }) {
           <option value="all">All</option>
           <option value="MAYOR">Mayor a Menor</option>
           <option value="MENOR">Menor a Mayor</option>
+        </select>
+      </div>
+      <div>
+        <span>Filter By Type of Activity:</span>
+        <select onChange={(e) => handleSelectActivity(e)}>
+          <option value="Verano">Verano</option>
+          <option value="Invierno">Invierno</option>
+          <option value="Primavera">Primavera</option>
+          <option value="Otoño">Otoño</option>
         </select>
       </div>
     </div>
