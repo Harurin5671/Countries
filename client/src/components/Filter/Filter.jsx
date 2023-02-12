@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FilterByContinent, getCountries } from "../../redux/actions";
+import { FilterByContinent, getCountries, orderByName, orderByPop } from "../../redux/actions";
 // import {
 //   filterCreated,
 //   orderByName,
@@ -12,9 +12,8 @@ import { FilterByContinent, getCountries } from "../../redux/actions";
 export default function Filter({ setCurrentPage, setOrder }) {
   const dispatch = useDispatch();
   const allActivities = useSelector((state) => state.activities);
+  console.log("🚀 ~ file: Filter.jsx:15 ~ Filter ~ allActivities", allActivities)
   const allCountries = useSelector((state) => state.countries);
-  const continents = allCountries.map((c) => c.continents);
-  console.log("🚀 ~ file: Filter.jsx:17 ~ Filter ~ continents", continents);
 
   // function handleFilterCreated(e) {
   //   e.preventDefault();
@@ -43,6 +42,21 @@ export default function Filter({ setCurrentPage, setOrder }) {
   function handleSelectContinent(e) {
     e.preventDefault();
     dispatch(FilterByContinent(e.target.value));
+    console.log("🚀 ~ file: Filter.jsx:51 ~ handleSelectContinent ~ e.target.value", e.target.value)
+    setCurrentPage(1);
+    setOrder(e.target.value);
+  }
+
+  function handleOrderByname(e){
+  e.preventDefault();
+  dispatch(orderByName(e.target.value));
+  setCurrentPage(1);
+  setOrder(e.target.value);
+}
+
+  function handleSortPop(e){
+    e.preventDefault();
+    dispatch(orderByPop(e.target.value));
     setCurrentPage(1);
     setOrder(e.target.value);
   }
@@ -89,7 +103,35 @@ export default function Filter({ setCurrentPage, setOrder }) {
           <option value="api">Api</option>
         </select>
       </div> */}
-      hola
+      <div>
+        <span>Filter by Continent:</span>
+        <select onChange={(e) => handleSelectContinent(e)}>
+        {/* {newArray && newArray.map(c => <option key={c} value={c}>{c}</option>)} */}
+        <option value="all">All</option>
+          <option value="Antarctica">Antarctica</option>
+          <option value="South America">South America</option>
+          <option value="Asia">Asia</option>
+          <option value="Africa">Africa</option>
+          <option value="Europe">Europe</option>
+          <option value="North America">North America</option>
+          <option value="Oceania">Oceania</option>
+        </select>
+      </div>
+      <div>
+      <span>Filter by Order:</span>
+        <select onChange={(e) => handleOrderByname(e)}>
+        <option value="ASC">Ascendent</option>
+        <option value="DES">Descendent</option>
+        </select>
+      </div>
+      <div>
+        <span>Filter By Population:</span>
+        <select onChange={(e) => handleSortPop(e)}>
+          <option value="all">All</option>
+          <option value="MAYOR">Mayor a Menor</option>
+          <option value="MENOR">Menor a Mayor</option>
+        </select>
+      </div>
     </div>
   );
 }

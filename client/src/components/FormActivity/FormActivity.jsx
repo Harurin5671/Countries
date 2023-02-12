@@ -94,6 +94,8 @@ export default function FormActivity() {
       countries: input.countries.filter((c) => c !== d),
     });
   }
+  
+  console.log(input)
 
   return (
     <div>
@@ -133,17 +135,18 @@ export default function FormActivity() {
         </div>
         <div>
           <label>Activity Season:</label>
-          <input
-            onChange={(e) => handleChange(e)}
-            type="text"
-            placeholder="Complete here..."
-            name="season"
-            value={input.season}
-          />
+          <select name="season" onChange={(e) => handleChange(e)}>
+            <option value="All"></option>
+            <option value="Verano">Verano </option>
+            <option value="Invierno">Invierno </option>
+            <option value="Primavera">Primavera </option>
+            <option value="Otoño">Otoño </option>
+          </select>
         </div>
         <div>
           <span>Countries</span>
           <select onChange={(e) => handleSelect(e)}>
+          <option value="All" key="All"></option>
             {allCountries &&
               allCountries.map((c) => (
                 <option value={c.name} key={c.name}>
@@ -151,7 +154,7 @@ export default function FormActivity() {
                 </option>
               ))}
           </select>
-          {input.countries.map((d, i) => (
+          {input.countries && input.countries.map((d, i) => (
             <div key={i}>
               <h5>{d}</h5>
               <button onClick={(e) => handleDelete(e, d)}>x</button>
